@@ -33,24 +33,29 @@ int pError=0;
 int correction = 0;
 
 void loop() {
-    digitalWrite(LEFT_LED, LOW);
+  //turn off the turn LEDs
+  digitalWrite(LEFT_LED, LOW);
   digitalWrite(RIGHT_LED, LOW);
+  
+  //get the values for how far the bot is off the line
   leftValue = analogRead(LEFT_IR) - 200;
   rightValue = analogRead(RIGHT_IR);
   leftValue = map(leftValue, 0, 1023, 1023, 0);
   rightValue = map(rightValue, 0, 1023, 1023, 0);
-  
+
+  //print the error for testing purposes
   Serial.print("Left: ");
   Serial.println(leftValue);
   Serial.print("Right: ");
   Serial.println(rightValue);
   
-  //acquiring distances from the walls
-  int lerr = -left + leftS;
-  int rerr = right - rightS;
-  
+  //acquiring distances from the line looollll  -NEED TO COLLECT APPROPRIATE VALUES FOR leftS and rightS
+  int lerr = -leftValue + leftS;
+  int rerr = rightValue - rightS;
   int err = (lerr+rerr)/2;
 
+  //getting and applying the correction
+  int correction = (int) getCorrection(err);
   int s1 = speed1-correction;
   int s2 = speed2+correction; 
 
@@ -66,17 +71,19 @@ void loop() {
 
   //Serial.println(err);
   //onwards we go
-  
+
+  //apply the speed change
   analogWrite(LEFT_MOTOR, s1);
   analogWrite(RIGHT_MOTOR, s2);
+
 
   //if leftValue is high, then turn on the left LED
   //if rightValue is high, then turn on the right LED
   //acquiring distances from the walls
-  if (leftValue > 500) { //dummy values
+  if (correction > 0) { //dummy values
     digitalWrite(LEFT_LED, HIGH);
   }
-  if (rightValue > 500) { //dummy values
+  if (correction < 0) { //dummy values
     digitalWrite(RIGHT_LED, HIGH);  
   }
   
