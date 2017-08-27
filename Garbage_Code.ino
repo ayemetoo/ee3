@@ -23,7 +23,9 @@ void setup() {
 
 }
 
+double getCorrection(int err);
 int leftValue, rightValue;
+int leftS = 245, rightS = 45;
 double KI=1,KD=0.9,KP=1; //changed from int to double to fine tune
 int dt=10;
 int speed1 = 110; 
@@ -54,19 +56,19 @@ void loop() {
   int rerr = rightValue - rightS;
   int err = (lerr+rerr)/2;
 
-  //getting and applying the correction
+  //getting and applying the correction - check signs of correction?
   int correction = (int) getCorrection(err);
-  int s1 = speed1-correction;
-  int s2 = speed2+correction; 
+  int s1 = speed1+correction;
+  int s2 = speed2-correction; 
 
   //make sure the speed change isn't too drastic
   if(s1<0)
-    s1 = 0;
-  else if(s1>200)
+    s1 = 100;
+  else if(s1>250)
     s1 = 250;
   if(s2<0)
-    s2 = 0;
-  else if(s2>200)
+    s2 = 100;
+  else if(s2>250)
     s2 = 250;
 
   //Serial.println(err);
@@ -80,17 +82,14 @@ void loop() {
   //if leftValue is high, then turn on the left LED
   //if rightValue is high, then turn on the right LED
   //acquiring distances from the walls
-  if (correction > 0) { //dummy values
+  if (err < -1) { //dummy values
     digitalWrite(LEFT_LED, HIGH);
   }
-  if (correction < 0) { //dummy values
+  if (err > 1) { //dummy values
     digitalWrite(RIGHT_LED, HIGH);  
   }
   
   delay(dt);
-}
-
-
 }
 
 double getCorrection(int err){ //used to be int
