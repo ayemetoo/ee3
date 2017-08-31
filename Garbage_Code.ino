@@ -81,7 +81,6 @@ void loop() {
 
   //if leftValue is high, then turn on the left LED
   //if rightValue is high, then turn on the right LED
-  //acquiring distances from the walls
   if (err < -1) { //dummy values
     digitalWrite(LEFT_LED, HIGH);
   }
