@@ -26,7 +26,7 @@ void setup() {
 double getCorrection(int err);
 int leftValue, rightValue;
 int leftS = 245, rightS = 45;
-double KI=1,KD=0.9,KP=1; //changed from int to double to fine tune
+double KI=0.7,KD=0.9,KP=1; //changed from int to double to fine tune
 int dt=10;
 int speed1 = 110; 
 int speed2 = 130; 
