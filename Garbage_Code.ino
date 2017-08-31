@@ -20,16 +20,16 @@ void setup() {
   pinMode(RIGHT_LED, OUTPUT);
   pinMode(LEFT_MOTOR, OUTPUT);
   pinMode(RIGHT_MOTOR, OUTPUT);
-
+  delay(1000);
 }
 
 double getCorrection(int err);
 int leftValue, rightValue;
 int leftS = 245, rightS = 45;
-double KI=0.7,KD=0.9,KP=1; //changed from int to double to fine tune
+double KD=0.9,KP=0.8; //changed from int to double to fine tune
 int dt=10;
-int speed1 = 110; 
-int speed2 = 130; 
+int speed1 = 98; 
+int speed2 = 125; 
 int pError=0;
 //int integral=0;
 int correction = 0;
@@ -63,11 +63,11 @@ void loop() {
 
   //make sure the speed change isn't too drastic
   if(s1<0)
-    s1 = 100;
+    s1 = 98;
   else if(s1>250)
     s1 = 250;
   if(s2<0)
-    s2 = 100;
+    s2 = 125;
   else if(s2>250)
     s2 = 250;
 
