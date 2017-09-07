@@ -1,8 +1,11 @@
 ///Sensors
 #define LEFT_IR A0
 #define RIGHT_IR A1
+
 //MAGNET
 #define magnetSen 8
+//Magnet LED
+#define magnetLED 6
 
 ///Turn Indicators
 #define LEFT_LED 4
@@ -25,6 +28,7 @@ void setup() {
   pinMode(RIGHT_MOTOR, OUTPUT);
   //MAGNET
   pinMode(magnetSen, INPUT);
+  pinMode(magnetLED, OUTPUT);
   delay(1000);
 }
 
@@ -62,10 +66,13 @@ void loop() {
   Serial.println(rightValue);
 
   //MAGNET
-  if (magnet == 1)
+  if (magnet == 1){
     Serial.print("Magnet Detected\n");
-  else
+    digitalWrite(magnetLED, HIGH);
+  }else{
     Serial.print("Magnet Waiting\n");
+    digitalWrite(magnetLED, LOW);
+  }
   
   //acquiring distances from the line looollll  -NEED TO COLLECT APPROPRIATE VALUES FOR leftS and rightS
   int lerr = -leftValue + leftS;
